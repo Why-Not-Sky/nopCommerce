@@ -93,9 +93,6 @@ namespace Nop.Data.Tests.Catalog
                 Price = 21.1M,
                 OldPrice = 22.1M,
                 ProductCost = 23.1M,
-                SpecialPrice = 32.1M,
-                SpecialPriceStartDateTimeUtc = new DateTime(2010, 01, 05),
-                SpecialPriceEndDateTimeUtc = new DateTime(2010, 01, 06),
                 CustomerEntersPrice = true,
                 MinimumCustomerEnteredPrice = 24.1M,
                 MaximumCustomerEnteredPrice = 25.1M,
@@ -107,7 +104,7 @@ namespace Nop.Data.Tests.Catalog
                 MarkAsNew = true,
                 MarkAsNewStartDateTimeUtc = new DateTime(2010, 01, 07),
                 MarkAsNewEndDateTimeUtc = new DateTime(2010, 01, 08),
-                HasTierPrices = true,
+                HasAdvancedPricing = true,
                 HasDiscountsApplied = true,
                 Weight = 26.1M,
                 Length = 27.1M,
@@ -203,9 +200,6 @@ namespace Nop.Data.Tests.Catalog
             fromDb.Price.ShouldEqual(21.1M);
             fromDb.OldPrice.ShouldEqual(22.1M);
             fromDb.ProductCost.ShouldEqual(23.1M);
-            fromDb.SpecialPrice.ShouldEqual(32.1M);
-            fromDb.SpecialPriceStartDateTimeUtc.ShouldEqual(new DateTime(2010, 01, 05));
-            fromDb.SpecialPriceEndDateTimeUtc.ShouldEqual(new DateTime(2010, 01, 06));
             fromDb.CustomerEntersPrice.ShouldEqual(true);
             fromDb.MinimumCustomerEnteredPrice.ShouldEqual(24.1M);
             fromDb.MaximumCustomerEnteredPrice.ShouldEqual(25.1M);
@@ -217,7 +211,7 @@ namespace Nop.Data.Tests.Catalog
             fromDb.MarkAsNew.ShouldEqual(true);
             fromDb.MarkAsNewStartDateTimeUtc.ShouldEqual(new DateTime(2010, 01, 07));
             fromDb.MarkAsNewEndDateTimeUtc.ShouldEqual(new DateTime(2010, 01, 08));
-            fromDb.HasTierPrices.ShouldEqual(true);
+            fromDb.HasAdvancedPricing.ShouldEqual(true);
             fromDb.HasDiscountsApplied.ShouldEqual(true);
             fromDb.Weight.ShouldEqual(26.1M);
             fromDb.Length.ShouldEqual(27.1M);
@@ -398,7 +392,7 @@ namespace Nop.Data.Tests.Catalog
         }
 
         [Test]
-        public void Can_save_and_load_product_with_tierPrices()
+        public void Can_save_and_load_product_with_advancedPricing()
         {
             var product = new Product
             {
@@ -406,9 +400,9 @@ namespace Nop.Data.Tests.Catalog
                 CreatedOnUtc = new DateTime(2010, 01, 03),
                 UpdatedOnUtc = new DateTime(2010, 01, 04),
             };
-            product.TierPrices.Add
+            product.AdvancedPrices.Add
                 (
-                    new TierPrice
+                    new AdvancedPrice
                     {
                         Quantity = 1,
                         Price = 2,
@@ -418,9 +412,9 @@ namespace Nop.Data.Tests.Catalog
             fromDb.ShouldNotBeNull();
             fromDb.Name.ShouldEqual("Product name 1");
 
-            fromDb.TierPrices.ShouldNotBeNull();
-            (fromDb.TierPrices.Count == 1).ShouldBeTrue();
-            fromDb.TierPrices.First().Quantity.ShouldEqual(1);
+            fromDb.AdvancedPrices.ShouldNotBeNull();
+            (fromDb.AdvancedPrices.Count == 1).ShouldBeTrue();
+            fromDb.AdvancedPrices.First().Quantity.ShouldEqual(1);
         }
 
         [Test]

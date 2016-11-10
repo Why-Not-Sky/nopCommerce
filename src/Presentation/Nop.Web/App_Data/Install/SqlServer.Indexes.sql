@@ -67,7 +67,7 @@ GO
 CREATE NONCLUSTERED INDEX [IX_OrderNote_OrderId] ON [OrderNote] ([OrderId] ASC)
 GO
 
-CREATE NONCLUSTERED INDEX [IX_TierPrice_ProductId] ON [TierPrice] ([ProductId] ASC)
+CREATE NONCLUSTERED INDEX [IX_AdvancedPrice_ProductId] ON [AdvancedPrice] ([ProductId] ASC)
 GO
 
 CREATE NONCLUSTERED INDEX [IX_ShoppingCartItem_ShoppingCartTypeId_CustomerId] ON [ShoppingCartItem] ([ShoppingCartTypeId] ASC, [CustomerId] ASC)

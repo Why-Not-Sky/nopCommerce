@@ -362,7 +362,7 @@
     <Compile Include="Domain\Catalog\RelatedProduct.cs" />
     <Compile Include="Domain\Catalog\SpecificationAttribute.cs" />
     <Compile Include="Domain\Catalog\SpecificationAttributeOption.cs" />
-    <Compile Include="Domain\Catalog\TierPrice.cs" />
+    <Compile Include="Domain\Catalog\AdvancedPrice.cs" />
     <Compile Include="Domain\Customers\PasswordFormat.cs" />
     <Compile Include="NopVersion.cs" />
     <Compile Include="WebHelper.cs" />

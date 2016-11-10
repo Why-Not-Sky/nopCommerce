@@ -737,6 +737,117 @@ set @resources='
   <LocaleResource Name="Plugins.Shipping.FixedOrByWeight.Formula.Value">
     <Value>[additional fixed cost] + ([order total weight] - [lower weight limit]) * [rate per weight unit] + [order subtotal] * [charge percentage]</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPrice">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPrice.Hint">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPriceEndDateTimeUtc">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPriceEndDateTimeUtc.Hint">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPriceStartDateTimeUtc">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPriceStartDateTimeUtc.Hint">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.SpecialPrice">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.SpecialPriceEndDate">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.SpecialPriceStartDate">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.TierPrices">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.CustomerRole">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.CustomerRole.All">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.Price">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.Quantity">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.Store">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.Store.All">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.TierPrices.SaveBeforeEdit">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Hint">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.TierPrices">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.TierPrices">
+    <Value>PRICE BREAKS - The more you buy, the more you save</Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.TierPrices.Price">
+    <Value>Price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.TierPrices.Quantity">
+    <Value>Quantity</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing">
+    <Value>Advanced зricing</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.CustomerRole">
+    <Value>Customer role</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.CustomerRole.All">
+    <Value>All customer roles</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.EndDateTimeUtc">
+    <Value>End date</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.Price">
+    <Value>Price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.Quantity">
+    <Value>Quantity</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.StartDateTimeUtc">
+    <Value>Start date</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.Store">
+    <Value>Store</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.Store.All">
+    <Value>All stores</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.SaveBeforeEdit">
+    <Value>You need to save the product before you can add advanced pricing for this product page.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Hint">
+    <Value>Advanced pricing is a promotional tool that allows a store owner to price items differently for higher quantities.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.AdvancedPricing">
+    <Value>Advanced pricing</Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.AdvancedPricing">
+    <Value>PRICE BREAKS - The more you buy, the more you save</Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.AdvancedPricing.Price">
+    <Value>Price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.AdvancedPricing.Quantity">
+    <Value>Quantity</Value>
+  </LocaleResource>
 </Language>
 '
 
@@ -1646,4 +1757,100 @@ GO
 UPDATE [Setting] 
 SET [Name] = N'shippingratecomputationmethod.fixedorbyweight.rate.shippingmethodid' + SUBSTRING(name, 62, len(name))
 WHERE [Name] like N'shippingratecomputationmethod.fixedrate.rate.shippingmethodid%'
+GO
+
+--drop column
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[Product]') and NAME='SpecialPrice')
+BEGIN
+	ALTER TABLE [Product] DROP COLUMN [SpecialPrice]
+END
+GO
+
+--drop column
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[Product]') and NAME='SpecialPriceStartDateTimeUtc')
+BEGIN
+	ALTER TABLE [Product] DROP COLUMN [SpecialPriceStartDateTimeUtc]
+END
+GO
+
+--drop column
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[Product]') and NAME='SpecialPriceEndDateTimeUtc')
+BEGIN
+	ALTER TABLE [Product] DROP COLUMN [SpecialPriceEndDateTimeUtc]
+END
+GO
+
+--rename column
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[Product]') and NAME='HasTierPrices')
+BEGIN
+	EXEC sp_rename 'Product.HasTierPrices', 'HasAdvancedPricing', 'COLUMN';
+END
+GO
+
+--rename table
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[TierPrice]') and OBJECTPROPERTY(object_id, N'IsUserTable') = 1)
+BEGIN
+	EXEC sp_rename 'TierPrice', 'AdvancedPrice';
+END
+GO
+
+IF EXISTS (SELECT 1 FROM sys.objects WHERE name = 'TierPrice_CustomerRole' AND parent_object_id = Object_id('AdvancedPrice') AND Objectproperty(object_id,N'IsForeignKey') = 1)
+BEGIN
+	EXEC sp_rename 'TierPrice_CustomerRole', 'AdvancedPrice_CustomerRole';
+END
+GO
+
+IF EXISTS (SELECT 1 FROM sys.objects WHERE name = 'TierPrice_Product' AND parent_object_id = Object_id('AdvancedPrice') AND Objectproperty(object_id,N'IsForeignKey') = 1)
+BEGIN
+	EXEC sp_rename 'TierPrice_Product', 'AdvancedPrice_Product';
+END
+GO
+
+--add a new column
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[AdvancedPrice]') and NAME='StartDateTimeUtc')
+BEGIN
+	ALTER TABLE [AdvancedPrice]
+	ADD [StartDateTimeUtc] datetime NULL
+END
+GO
+
+--add a new column
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[AdvancedPrice]') and NAME='EndDateTimeUtc')
+BEGIN
+	ALTER TABLE [AdvancedPrice]
+	ADD [EndDateTimeUtc] datetime NULL
+END
+GO
+
+--rename settings
+UPDATE [Setting] 
+SET [Name] = N'catalogsettings.displayadvancedpriceswithdiscounts' 
+WHERE [Name] = N'catalogsettings.displaytierpriceswithdiscounts'
+GO
+
+--rename settings
+UPDATE [Setting] 
+SET [Name] = N'shoppingcartsettings.groupadvancedpricesfordistinctshoppingcartitems' 
+WHERE [Name] = N'shoppingcartsettings.grouptierpricesfordistinctshoppingcartitems'
+GO
+
+--delete setting
+DELETE FROM [Setting]
+WHERE [name] = N'producteditorsettings.specialprice'
+GO
+
+--delete setting
+DELETE FROM [Setting]
+WHERE [name] = N'producteditorsettings.specialpricestartdate'
+GO
+
+--delete setting
+DELETE FROM [Setting]
+WHERE [name] = N'producteditorsettings.specialpriceenddate'
+GO
+
+--rename settings
+UPDATE [Setting] 
+SET [Name] = N'producteditorsettings.advancedpricing' 
+WHERE [Name] = N'producteditorsettings.tierprices'
 GO

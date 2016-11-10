@@ -1,36 +1,36 @@
-﻿@model IList<ProductDetailsModel.TierPriceModel>
+﻿@model IList<ProductDetailsModel.AdvancedPriceModel>
 @using Nop.Web.Models.Catalog;
 @{
-    //When there is just one tier (with  qty 1), there are no actual savings in the list.
-    var displayTierPrices = Model.Count > 0 && !(Model.Count == 1 && Model[0].Quantity <= 1);
+    //When there is just one advanced price (with  qty 1), there are no actual savings in the list
+    var displayAdvancedPrices = Model.Count > 0 && !(Model.Count == 1 && Model[0].Quantity <= 1);
 }
-@if (displayTierPrices)
+@if (displayAdvancedPrices)
 {
     <div class="tier-prices">
         <div class="title">
-            <strong>@T("Products.TierPrices")</strong>
+            <strong>@T("Products.AdvancedPricing")</strong>
         </div>
         <div class="table-wrapper">
             <table class="prices-table">
                 <tr>
                     <td class="field-header">
-                        @T("Products.TierPrices.Quantity")
+                        @T("Products.AdvancedPricing.Quantity")
                     </td>
-                    @foreach (var tierPrice in Model)
+                    @foreach (var advancedPrice in Model)
                     {
                         <td class="item-quantity">
-                            @(tierPrice.Quantity)+
+                            @(advancedPrice.Quantity)+
                         </td>
                     }
                 </tr>
                 <tr>
                     <td class="field-header">
-                        @T("Products.TierPrices.Price")
+                        @T("Products.AdvancedPricing.Price")
                     </td>
-                    @foreach (var tierPrice in Model)
+                    @foreach (var advancedPrice in Model)
                     {
                         <td class="item-price">
-                            @tierPrice.Price
+                            @advancedPrice.Price
                         </td>
                     }
                 </tr>

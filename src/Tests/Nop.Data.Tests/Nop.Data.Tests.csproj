@@ -141,7 +141,7 @@
     <Compile Include="Directory\CountryPersistenceTests.cs" />
     <Compile Include="Directory\StateProvincePersistenceTests.cs" />
     <Compile Include="Localization\LocalizedPropertyPersistenceTests.cs" />
-    <Compile Include="Catalog\TierPricePersistenceTests.cs" />
+    <Compile Include="Catalog\AdvancedPricePersistenceTests.cs" />
     <Compile Include="Catalog\ProductSpecificationAttributePersistenceTests.cs" />
     <Compile Include="Catalog\SpecificationAttributeOptionPersistenceTests.cs" />
     <Compile Include="Catalog\SpecificationAttributePersistenceTests.cs" />

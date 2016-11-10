@@ -95,7 +95,7 @@ namespace Nop.Core.Domain.Orders
         /// Gets or sets a value indicating whether we should group shopping cart items for the same products
         /// For example, a customer could have two shopping cart items for the same products (different product attributes)
         /// </summary>
-        public bool GroupTierPricesForDistinctShoppingCartItems  { get; set; }
+        public bool GroupAdvancedPricesForDistinctShoppingCartItems  { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether a customer will beable to edit products in the cart

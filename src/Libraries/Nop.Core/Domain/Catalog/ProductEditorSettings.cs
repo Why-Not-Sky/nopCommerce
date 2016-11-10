@@ -81,24 +81,9 @@ namespace Nop.Core.Domain.Catalog
         public bool ProductCost { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Special price' field is shown
+        /// Gets or sets a value indicating whether 'Advanced pricing' is shown
         /// </summary>
-        public bool SpecialPrice { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether 'Special price start date' field is shown
-        /// </summary>
-        public bool SpecialPriceStartDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether 'Special price end date' field is shown
-        /// </summary>
-        public bool SpecialPriceEndDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether 'Tier prices' field is shown
-        /// </summary>
-        public bool TierPrices { get; set; }
+        public bool AdvancedPricing { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether 'Discounts' field is shown

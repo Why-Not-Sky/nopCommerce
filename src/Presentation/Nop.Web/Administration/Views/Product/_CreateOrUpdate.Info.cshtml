@@ -71,7 +71,7 @@
         var selectedProductTypeId = $("#@Html.FieldIdFor(model => model.ProductTypeId)").val();
         if (!selectedProductTypeId || selectedProductTypeId == @(((int) ProductType.SimpleProduct).ToString())) {
             $('#group-prices').show();
-        $('#tier-prices').show();
+        $('#advanced-pricing').show();
         $('#group-required-other-products').show();
         $('#group-giftcard').show();
         $('#group-downloads').show();
@@ -82,7 +82,7 @@
         $('#group-associated-products').hide();
     } else if (selectedProductTypeId == @(((int) ProductType.GroupedProduct).ToString())) {
         $('#group-prices').hide();
-        $('#tier-prices').hide();
+        $('#advanced-pricing').hide();
         $('#group-required-other-products').hide();
         $('#group-giftcard').hide();
         $('#group-downloads').hide();
@@ -917,33 +917,6 @@
                             @Html.ValidationMessageFor(model => model.ProductCost)
                         </div>
                     </div>
-                    <div class="form-group @(Model.ProductEditorSettingsModel.SpecialPrice ? null : "advanced-setting")">
-                        <div class="col-md-3">
-                            @Html.NopLabelFor(model => model.SpecialPrice)
-                        </div>
-                        <div class="col-md-9">
-                            @Html.NopEditorFor(model => model.SpecialPrice) [@Model.PrimaryStoreCurrencyCode]
-                            @Html.ValidationMessageFor(model => model.SpecialPrice)
-                        </div>
-                    </div>
-                    <div class="form-group @(Model.ProductEditorSettingsModel.SpecialPriceStartDate ? null : "advanced-setting")">
-                        <div class="col-md-3">
-                            @Html.NopLabelFor(model => model.SpecialPriceStartDateTimeUtc)
-                        </div>
-                        <div class="col-md-9">
-                            @Html.NopEditorFor(model => model.SpecialPriceStartDateTimeUtc)
-                            @Html.ValidationMessageFor(model => model.SpecialPriceStartDateTimeUtc)
-                        </div>
-                    </div>
-                    <div class="form-group @(Model.ProductEditorSettingsModel.SpecialPriceEndDate ? null : "advanced-setting")">
-                        <div class="col-md-3">
-                            @Html.NopLabelFor(model => model.SpecialPriceEndDateTimeUtc)
-                        </div>
-                        <div class="col-md-9">
-                            @Html.NopEditorFor(model => model.SpecialPriceEndDateTimeUtc)
-                            @Html.ValidationMessageFor(model => model.SpecialPriceEndDateTimeUtc)
-                        </div>
-                    </div>
                     <div class="form-group @(Model.ProductEditorSettingsModel.DisableBuyButton ? null : "advanced-setting")">
                         <div class="col-md-3">
                             @Html.NopLabelFor(model => model.DisableBuyButton)
@@ -1118,44 +1091,44 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default @(Model.ProductEditorSettingsModel.TierPrices ? null : "advanced-setting")" id="tier-prices">
+            <div class="panel panel-default @(Model.ProductEditorSettingsModel.AdvancedPricing ? null : "advanced-setting")" id="advanced-pricing">
                 <div class="panel-heading">
-                    @T("Admin.Catalog.Products.TierPrices")
+                    @T("Admin.Catalog.Products.AdvancedPricing")
                 </div>
                 <div class="panel-body">
                     <p>
-                        @T("Admin.Catalog.Products.TierPrices.Hint")
+                        @T("Admin.Catalog.Products.AdvancedPricing.Hint")
                     </p>
                     @if (Model.Id > 0)
                     {
-                        <div id="tierprices-grid"></div>
+                        <div id="advancedpricing-grid"></div>
 
                         <script>
                             $(document).ready(function() {
-                                $("#tierprices-grid").kendoGrid({
+                                $("#advancedpricing-grid").kendoGrid({
                                     dataSource: {
                                         type: "json",
                                         transport: {
                                             read: {
-                                                url: "@Html.Raw(Url.Action("TierPriceList", "Product", new {productId = Model.Id}))",
+                                                url: "@Html.Raw(Url.Action("AdvancedPriceList", "Product", new {productId = Model.Id}))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: addAntiForgeryToken
                                             },
                                             create: {
-                                                url: "@Html.Raw(Url.Action("TierPriceInsert", "Product", new {productId = Model.Id}))",
+                                                url: "@Html.Raw(Url.Action("AdvancedPriceInsert", "Product", new {productId = Model.Id}))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: addAntiForgeryToken
                                             },
                                             update: {
-                                                url: "@Html.Raw(Url.Action("TierPriceUpdate", "Product"))",
+                                                url: "@Html.Raw(Url.Action("AdvancedPriceUpdate", "Product"))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: addAntiForgeryToken
                                             },
                                             destroy: {
-                                                url: "@Html.Raw(Url.Action("TierPriceDelete", "Product"))",
+                                                url: "@Html.Raw(Url.Action("AdvancedPriceDelete", "Product"))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: addAntiForgeryToken
@@ -1175,6 +1148,8 @@
                                                     //ProductId: { editable: false, type: "number" },
                                                     Quantity: { editable: true, type: "number" },
                                                     Price: { editable: true, type: "number" },
+                                                    StartDateTimeUtc: { editable: true, type: "date" },
+                                                    EndDateTimeUtc: { editable: true, type: "date" },
                                                     Id: { editable: false, type: "number" }
                                                 }
                                             }
@@ -1208,27 +1183,25 @@
                                     columns: [
                                         {
                                             field: "StoreId",
-                                            title: "@T("Admin.Catalog.Products.TierPrices.Fields.Store")",
+                                            title: "@T("Admin.Catalog.Products.AdvancedPricing.Fields.Store")",
                                             width: 250,
                                             editor: storeDropDownEditor,
                                             template: "#:Store#"
-                                        },
-                                        {
+                                        }, {
                                             field: "CustomerRoleId",
-                                            title: "@T("Admin.Catalog.Products.TierPrices.Fields.CustomerRole")",
+                                            title: "@T("Admin.Catalog.Products.AdvancedPricing.Fields.CustomerRole")",
                                             width: 250,
                                             editor: customerRoleDropDownEditor,
                                             template: "#:CustomerRole#"
-                                        },
-                                        {
+                                        }, {
                                             field: "Quantity",
-                                            title: "@T("Admin.Catalog.Products.TierPrices.Fields.Quantity")",
+                                            title: "@T("Admin.Catalog.Products.AdvancedPricing.Fields.Quantity")",
                                             width: 150,
                                             //integer format
                                             format: "{0:0}"
                                         }, {
                                             field: "Price",
-                                            title: "@T("Admin.Catalog.Products.TierPrices.Fields.Price")",
+                                            title: "@T("Admin.Catalog.Products.AdvancedPricing.Fields.Price")",
                                             width: 150,
                                             editor: function(container, options) {
                                                 $('<input name="' + options.field + '"/>')
@@ -1238,6 +1211,18 @@
                                                         decimals: 4
                                                     });
                                             }
+                                        }, {
+                                            field: "StartDateTimeUtc",
+                                            title: "@T("Admin.Catalog.Products.AdvancedPricing.Fields.StartDateTimeUtc")",
+                                            width: 100,
+                                            type: "date",
+                                            format: "{0:G}",
+                                        }, {
+                                            field: "EndDateTimeUtc",
+                                            title: "@T("Admin.Catalog.Products.AdvancedPricing.Fields.EndDateTimeUtc")",
+                                            width: 100,
+                                            type: "date",
+                                            format: "{0:G}",
                                         }, {
                                             command: [
                                                 {
@@ -1282,7 +1267,7 @@
                             var allCustomerRoles = [
                                 {
                                     Id: 0,
-                                    Name: "@T("Admin.Catalog.Products.TierPrices.Fields.CustomerRole.All")"
+                                    Name: "@T("Admin.Catalog.Products.AdvancedPricing.Fields.CustomerRole.All")"
                                 }
                                 @{
                                 var customerService = EngineContext.Current.Resolve<ICustomerService>();
@@ -1320,7 +1305,7 @@
     }
     else
     {
-        @T("Admin.Catalog.Products.TierPrices.SaveBeforeEdit")
+        @T("Admin.Catalog.Products.AdvancedPricing.SaveBeforeEdit")
     }
                 </div>
             </div>

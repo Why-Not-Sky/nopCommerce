@@ -21,7 +21,7 @@ namespace Nop.Core.Domain.Catalog
         private ICollection<ProductTag> _productTags;
         private ICollection<ProductAttributeMapping> _productAttributeMappings;
         private ICollection<ProductAttributeCombination> _productAttributeCombinations;
-        private ICollection<TierPrice> _tierPrices;
+        private ICollection<AdvancedPrice> _advancedPrices;
         private ICollection<Discount> _appliedDiscounts;
         private ICollection<ProductWarehouseInventory> _productWarehouseInventory;
 
@@ -364,18 +364,6 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public decimal ProductCost { get; set; }
         /// <summary>
-        /// Gets or sets the product special price
-        /// </summary>
-        public decimal? SpecialPrice { get; set; }
-        /// <summary>
-        /// Gets or sets the start date and time of the special price
-        /// </summary>
-        public DateTime? SpecialPriceStartDateTimeUtc { get; set; }
-        /// <summary>
-        /// Gets or sets the end date and time of the special price
-        /// </summary>
-        public DateTime? SpecialPriceEndDateTimeUtc { get; set; }
-        /// <summary>
         /// Gets or sets a value indicating whether a customer enters price
         /// </summary>
         public bool CustomerEntersPrice { get; set; }
@@ -424,13 +412,13 @@ namespace Nop.Core.Domain.Catalog
         public DateTime? MarkAsNewEndDateTimeUtc { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this product has tier prices configured
-        /// <remarks>The same as if we run this.TierPrices.Count > 0
+        /// Gets or sets a value indicating whether this product has advanced pricing configured
+        /// <remarks>The same as if we run this.AdvancedPrices.Count > 0
         /// We use this property for performance optimization:
-        /// if this property is set to false, then we do not need to load tier prices navigation property
+        /// if this property is set to false, then we do not need to load advanced prices navigation property
         /// </remarks>
         /// </summary>
-        public bool HasTierPrices { get; set; }
+        public bool HasAdvancedPricing { get; set; }
         /// <summary>
         /// Gets or sets a value indicating whether this product has discounts applied
         /// <remarks>The same as if we run this.AppliedDiscounts.Count > 0
@@ -693,12 +681,12 @@ namespace Nop.Core.Domain.Catalog
         }
 
         /// <summary>
-        /// Gets or sets the tier prices
+        /// Gets or sets the advanced prices
         /// </summary>
-        public virtual ICollection<TierPrice> TierPrices
+        public virtual ICollection<AdvancedPrice> AdvancedPrices
         {
-            get { return _tierPrices ?? (_tierPrices = new List<TierPrice>()); }
-            protected set { _tierPrices = value; }
+            get { return _advancedPrices ?? (_advancedPrices = new List<AdvancedPrice>()); }
+            protected set { _advancedPrices = value; }
         }
 
         /// <summary>

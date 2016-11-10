@@ -262,9 +262,9 @@ namespace Nop.Core.Domain.Catalog
         public bool IncludeFeaturedProductsInNormalLists { get; set; }
         
         /// <summary>
-        /// Gets or sets a value indicating whether tier prices should be displayed with applied discounts (if available)
+        /// Gets or sets a value indicating whether advanced prices should be displayed with applied discounts (if available)
         /// </summary>
-        public bool DisplayTierPricesWithDiscounts { get; set; }
+        public bool DisplayAdvancedPricesWithDiscounts { get; set; }
         
         /// <summary>
         /// Gets or sets a value indicating whether to ignore discounts (side-wide). It can significantly improve performance when enabled.

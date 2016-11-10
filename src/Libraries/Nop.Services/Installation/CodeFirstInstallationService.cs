@@ -5838,7 +5838,7 @@ namespace Nop.Services.Installation
                 IncludeShortDescriptionInCompareProducts = false,
                 IncludeFullDescriptionInCompareProducts = false,
                 IncludeFeaturedProductsInNormalLists = false,
-                DisplayTierPricesWithDiscounts = true,
+                DisplayAdvancedPricesWithDiscounts = true,
                 IgnoreDiscounts = false,
                 IgnoreFeaturedProducts = false,
                 IgnoreAcl = true,
@@ -6041,7 +6041,7 @@ namespace Nop.Services.Installation
                 ShowProductImagesInMiniShoppingCart = true,
                 MiniShoppingCartProductNumber = 5,
                 RoundPricesDuringCalculation = true,
-                GroupTierPricesForDistinctShoppingCartItems = false,
+                GroupAdvancedPricesForDistinctShoppingCartItems = false,
                 AllowCartItemEditing = true,
                 RenderAssociatedAttributeValueQuantity = true
             });
@@ -8315,25 +8315,27 @@ namespace Nop.Services.Installation
                 MarkAsNew = true,
                 CreatedOnUtc = DateTime.UtcNow,
                 UpdatedOnUtc = DateTime.UtcNow,
-                TierPrices =
+                AdvancedPrices =
                 {
-                    new TierPrice
+                    new AdvancedPrice
                     {
                         Quantity = 2,
                         Price = 19
                     },
-                    new TierPrice
+                    new AdvancedPrice
                     {
                         Quantity = 5,
                         Price = 17
                     },
-                    new TierPrice
+                    new AdvancedPrice
                     {
                         Quantity = 10,
-                        Price = 15
+                        Price = 15,
+                        StartDateTimeUtc = new DateTime(2010, 05, 05),
+                        EndDateTimeUtc = new DateTime(2015, 05, 05)
                     }
                 },
-                HasTierPrices = true,
+                HasAdvancedPricing = true,
                 ProductCategories =
                 {
                     new ProductCategory
@@ -8997,25 +8999,25 @@ namespace Nop.Services.Installation
                 Published = true,
                 CreatedOnUtc = DateTime.UtcNow,
                 UpdatedOnUtc = DateTime.UtcNow,
-                TierPrices =
+                AdvancedPrices =
                 {
-                    new TierPrice
+                    new AdvancedPrice
                     {
                         Quantity = 3,
                         Price = 21
                     },
-                    new TierPrice
+                    new AdvancedPrice
                     {
                         Quantity = 7,
                         Price = 19
                     },
-                    new TierPrice
+                    new AdvancedPrice
                     {
                         Quantity = 10,
                         Price = 16
                     }
                 },
-                HasTierPrices = true,
+                HasAdvancedPricing = true,
                 ProductCategories =
                 {
                     new ProductCategory
@@ -9129,25 +9131,25 @@ namespace Nop.Services.Installation
                 Published = true,
                 CreatedOnUtc = DateTime.UtcNow,
                 UpdatedOnUtc = DateTime.UtcNow,
-                TierPrices =
+                AdvancedPrices =
                 {
-                    new TierPrice
+                    new AdvancedPrice
                     {
                         Quantity = 3,
                         Price = 40
                     },
-                    new TierPrice
+                    new AdvancedPrice
                     {
                         Quantity = 6,
                         Price = 38
                     },
-                    new TierPrice
+                    new AdvancedPrice
                     {
                         Quantity = 10,
                         Price = 35
                     }
                 },
-                HasTierPrices = true,
+                HasAdvancedPricing = true,
                 ProductCategories =
                 {
                     new ProductCategory

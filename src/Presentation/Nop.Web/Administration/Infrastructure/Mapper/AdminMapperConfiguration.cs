@@ -326,7 +326,7 @@ namespace Nop.Admin.Infrastructure.Mapper
                     .ForMember(dest => dest.ProductReviews, mo => mo.Ignore())
                     .ForMember(dest => dest.ProductSpecificationAttributes, mo => mo.Ignore())
                     .ForMember(dest => dest.ProductWarehouseInventory, mo => mo.Ignore())
-                    .ForMember(dest => dest.HasTierPrices, mo => mo.Ignore())
+                    .ForMember(dest => dest.HasAdvancedPricing, mo => mo.Ignore())
                     .ForMember(dest => dest.HasDiscountsApplied, mo => mo.Ignore())
                     .ForMember(dest => dest.BackorderMode, mo => mo.Ignore())
                     .ForMember(dest => dest.DownloadActivationType, mo => mo.Ignore())
@@ -337,7 +337,7 @@ namespace Nop.Admin.Infrastructure.Mapper
                     .ForMember(dest => dest.RentalPricePeriod, mo => mo.Ignore())
                     .ForMember(dest => dest.ProductAttributeMappings, mo => mo.Ignore())
                     .ForMember(dest => dest.ProductAttributeCombinations, mo => mo.Ignore())
-                    .ForMember(dest => dest.TierPrices, mo => mo.Ignore())
+                    .ForMember(dest => dest.AdvancedPrices, mo => mo.Ignore())
                     .ForMember(dest => dest.AppliedDiscounts, mo => mo.Ignore())
                     .ForMember(dest => dest.SubjectToAcl, mo => mo.Ignore())
                     .ForMember(dest => dest.LimitedToStores, mo => mo.Ignore());
@@ -860,7 +860,7 @@ namespace Nop.Admin.Infrastructure.Mapper
                     .ForMember(dest => dest.IncludeFeaturedProductsInNormalLists, mo => mo.Ignore())
                     .ForMember(dest => dest.AjaxProcessAttributeChange, mo => mo.Ignore())
                     .ForMember(dest => dest.MaximumBackInStockSubscriptions, mo => mo.Ignore())
-                    .ForMember(dest => dest.DisplayTierPricesWithDiscounts, mo => mo.Ignore())
+                    .ForMember(dest => dest.DisplayAdvancedPricesWithDiscounts, mo => mo.Ignore())
                     .ForMember(dest => dest.CompareProductsNumber, mo => mo.Ignore())
                     .ForMember(dest => dest.DefaultCategoryPageSizeOptions, mo => mo.Ignore())
                     .ForMember(dest => dest.DefaultCategoryPageSize, mo => mo.Ignore())
@@ -936,7 +936,7 @@ namespace Nop.Admin.Infrastructure.Mapper
                     .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
                 cfg.CreateMap<ShoppingCartSettingsModel, ShoppingCartSettings>()
                     .ForMember(dest => dest.RoundPricesDuringCalculation, mo => mo.Ignore())
-                    .ForMember(dest => dest.GroupTierPricesForDistinctShoppingCartItems, mo => mo.Ignore())
+                    .ForMember(dest => dest.GroupAdvancedPricesForDistinctShoppingCartItems, mo => mo.Ignore())
                     .ForMember(dest => dest.RenderAssociatedAttributeValueQuantity, mo => mo.Ignore());
                 cfg.CreateMap<MediaSettings, MediaSettingsModel>()
                     .ForMember(dest => dest.PicturesStoredIntoDatabase, mo => mo.Ignore())

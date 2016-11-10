@@ -3003,10 +3003,10 @@ namespace Nop.Admin.Controllers
 
         #endregion
 
-        #region Tier prices
+        #region Advanced pricing
 
         [HttpPost]
-        public ActionResult TierPriceList(DataSourceRequest command, int productId)
+        public ActionResult AdvancedPriceList(DataSourceRequest command, int productId)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
@@ -3019,47 +3019,44 @@ namespace Nop.Admin.Controllers
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return Content("This is not your product");
 
-            var tierPricesModel = product.TierPrices
-                .OrderBy(x => x.StoreId)
-                .ThenBy(x => x.Quantity)
-                .ThenBy(x => x.CustomerRoleId)
-                .Select(x =>
+            var advancedPriceModels = product.AdvancedPrices.OrderBy(x => x.StoreId).ThenBy(x => x.Quantity).ThenBy(x => x.CustomerRoleId).Select(x =>
+            {
+                string storeName;
+                if (x.StoreId > 0)
                 {
-                    string storeName;
-                    if (x.StoreId > 0)
-                    {
-                        var store = _storeService.GetStoreById(x.StoreId);
-                        storeName = store != null ? store.Name : "Deleted";
-                    }
-                    else
-                    {
-                        storeName = _localizationService.GetResource("Admin.Catalog.Products.TierPrices.Fields.Store.All");
-                    }
-                    return new ProductModel.TierPriceModel
-                    {
-                        Id = x.Id,
-                        StoreId = x.StoreId,
-                        Store = storeName,
-                        CustomerRole = x.CustomerRoleId.HasValue ? _customerService.GetCustomerRoleById(x.CustomerRoleId.Value).Name : _localizationService.GetResource("Admin.Catalog.Products.TierPrices.Fields.CustomerRole.All"),
-                        ProductId = x.ProductId,
-                        CustomerRoleId = x.CustomerRoleId.HasValue ? x.CustomerRoleId.Value : 0,
-                        Quantity = x.Quantity,
-                        Price = x.Price
-                    };
-                })
-                .ToList();
+                    var store = _storeService.GetStoreById(x.StoreId);
+                    storeName = store != null ? store.Name : "Deleted";
+                }
+                else
+                {
+                    storeName = _localizationService.GetResource("Admin.Catalog.Products.AdvancedPricing.Fields.Store.All");
+                }
+                return new ProductModel.AdvancedPriceModel
+                {
+                    Id = x.Id,
+                    StoreId = x.StoreId,
+                    Store = storeName,
+                    CustomerRole = x.CustomerRoleId.HasValue ? _customerService.GetCustomerRoleById(x.CustomerRoleId.Value).Name : _localizationService.GetResource("Admin.Catalog.Products.AdvancedPricing.Fields.CustomerRole.All"),
+                    ProductId = x.ProductId,
+                    CustomerRoleId = x.CustomerRoleId.HasValue ? x.CustomerRoleId.Value : 0,
+                    Quantity = x.Quantity,
+                    Price = x.Price,
+                    StartDateTimeUtc = x.StartDateTimeUtc,
+                    EndDateTimeUtc = x.EndDateTimeUtc
+                };
+            }).ToList();
 
             var gridModel = new DataSourceResult
             {
-                Data = tierPricesModel,
-                Total = tierPricesModel.Count
+                Data = advancedPriceModels,
+                Total = advancedPriceModels.Count
             };
 
             return Json(gridModel);
         }
 
         [HttpPost]
-        public ActionResult TierPriceInsert(ProductModel.TierPriceModel model)
+        public ActionResult AdvancedPriceInsert(ProductModel.AdvancedPriceModel model)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
@@ -3072,33 +3069,35 @@ namespace Nop.Admin.Controllers
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return Content("This is not your product");
 
-            var tierPrice = new TierPrice
+            var advancedPrice = new AdvancedPrice
             {
                 ProductId = model.ProductId,
                 StoreId = model.StoreId,
                 CustomerRoleId = model.CustomerRoleId > 0 ? model.CustomerRoleId : (int?)null,
                 Quantity = model.Quantity,
-                Price = model.Price
+                Price = model.Price,
+                StartDateTimeUtc = model.StartDateTimeUtc,
+                EndDateTimeUtc = model.EndDateTimeUtc
             };
-            _productService.InsertTierPrice(tierPrice);
+            _productService.InsertAdvancedPrice(advancedPrice);
 
-            //update "HasTierPrices" property
-            _productService.UpdateHasTierPricesProperty(product);
+            //update "HasAdvancedPricing" property
+            _productService.UpdateHasAdvancedPricingProperty(product);
 
             return new NullJsonResult();
         }
 
         [HttpPost]
-        public ActionResult TierPriceUpdate(ProductModel.TierPriceModel model)
+        public ActionResult AdvancedPriceUpdate(ProductModel.AdvancedPriceModel model)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
 
-            var tierPrice = _productService.GetTierPriceById(model.Id);
-            if (tierPrice == null)
-                throw new ArgumentException("No tier price found with the specified id");
+            var advancedPrice = _productService.GetAdvancedPriceById(model.Id);
+            if (advancedPrice == null)
+                throw new ArgumentException("No advanced price found with the specified id");
 
-            var product = _productService.GetProductById(tierPrice.ProductId);
+            var product = _productService.GetProductById(advancedPrice.ProductId);
             if (product == null)
                 throw new ArgumentException("No product found with the specified id");
 
@@ -3106,26 +3105,28 @@ namespace Nop.Admin.Controllers
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return Content("This is not your product");
 
-            tierPrice.StoreId = model.StoreId;
-            tierPrice.CustomerRoleId = model.CustomerRoleId > 0 ? model.CustomerRoleId : (int?)null;
-            tierPrice.Quantity = model.Quantity;
-            tierPrice.Price = model.Price;
-            _productService.UpdateTierPrice(tierPrice);
+            advancedPrice.StoreId = model.StoreId;
+            advancedPrice.CustomerRoleId = model.CustomerRoleId > 0 ? model.CustomerRoleId : (int?)null;
+            advancedPrice.Quantity = model.Quantity;
+            advancedPrice.Price = model.Price;
+            advancedPrice.StartDateTimeUtc = model.StartDateTimeUtc;
+            advancedPrice.EndDateTimeUtc = model.EndDateTimeUtc;
+            _productService.UpdateAdvancedPrice(advancedPrice);
 
             return new NullJsonResult();
         }
 
         [HttpPost]
-        public ActionResult TierPriceDelete(int id)
+        public ActionResult AdvancedPriceDelete(int id)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
 
-            var tierPrice = _productService.GetTierPriceById(id);
-            if (tierPrice == null)
-                throw new ArgumentException("No tier price found with the specified id");
+            var advancedPrice = _productService.GetAdvancedPriceById(id);
+            if (advancedPrice == null)
+                throw new ArgumentException("No advanced price found with the specified id");
 
-            var productId = tierPrice.ProductId;
+            var productId = advancedPrice.ProductId;
             var product = _productService.GetProductById(productId);
             if (product == null)
                 throw new ArgumentException("No product found with the specified id");
@@ -3134,10 +3135,10 @@ namespace Nop.Admin.Controllers
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return Content("This is not your product");
 
-            _productService.DeleteTierPrice(tierPrice);
+            _productService.DeleteAdvancedPrice(advancedPrice);
 
-            //update "HasTierPrices" property
-            _productService.UpdateHasTierPricesProperty(product);
+            //update "HasAdvancedPricing" property
+            _productService.UpdateHasAdvancedPricingProperty(product);
 
             return new NullJsonResult();
         }

@@ -46,7 +46,7 @@ namespace Nop.Services.Catalog
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<RelatedProduct> _relatedProductRepository;
         private readonly IRepository<CrossSellProduct> _crossSellProductRepository;
-        private readonly IRepository<TierPrice> _tierPriceRepository;
+        private readonly IRepository<AdvancedPrice> _advancedPriceRepository;
         private readonly IRepository<LocalizedProperty> _localizedPropertyRepository;
         private readonly IRepository<AclRecord> _aclRepository;
         private readonly IRepository<StoreMapping> _storeMappingRepository;
@@ -81,7 +81,7 @@ namespace Nop.Services.Catalog
         /// <param name="productRepository">Product repository</param>
         /// <param name="relatedProductRepository">Related product repository</param>
         /// <param name="crossSellProductRepository">Cross-sell product repository</param>
-        /// <param name="tierPriceRepository">Tier price repository</param>
+        /// <param name="advancedPriceRepository">Advanced price repository</param>
         /// <param name="localizedPropertyRepository">Localized property repository</param>
         /// <param name="aclRepository">ACL record repository</param>
         /// <param name="storeMappingRepository">Store mapping repository</param>
@@ -107,7 +107,7 @@ namespace Nop.Services.Catalog
             IRepository<Product> productRepository,
             IRepository<RelatedProduct> relatedProductRepository,
             IRepository<CrossSellProduct> crossSellProductRepository,
-            IRepository<TierPrice> tierPriceRepository,
+            IRepository<AdvancedPrice> advancedPriceRepository,
             IRepository<ProductPicture> productPictureRepository,
             IRepository<LocalizedProperty> localizedPropertyRepository,
             IRepository<AclRecord> aclRepository,
@@ -134,7 +134,7 @@ namespace Nop.Services.Catalog
             this._productRepository = productRepository;
             this._relatedProductRepository = relatedProductRepository;
             this._crossSellProductRepository = crossSellProductRepository;
-            this._tierPriceRepository = tierPriceRepository;
+            this._advancedPriceRepository = advancedPriceRepository;
             this._productPictureRepository = productPictureRepository;
             this._localizedPropertyRepository = localizedPropertyRepository;
             this._aclRepository = aclRepository;
@@ -800,42 +800,12 @@ namespace Nop.Services.Catalog
                 if (priceMin.HasValue)
                 {
                     //min price
-                    query = query.Where(p =>
-                                        //special price (specified price and valid date range)
-                                        ((p.SpecialPrice.HasValue &&
-                                          ((!p.SpecialPriceStartDateTimeUtc.HasValue ||
-                                            p.SpecialPriceStartDateTimeUtc.Value < nowUtc) &&
-                                           (!p.SpecialPriceEndDateTimeUtc.HasValue ||
-                                            p.SpecialPriceEndDateTimeUtc.Value > nowUtc))) &&
-                                         (p.SpecialPrice >= priceMin.Value))
-                                        ||
-                                        //regular price (price isn't specified or date range isn't valid)
-                                        ((!p.SpecialPrice.HasValue ||
-                                          ((p.SpecialPriceStartDateTimeUtc.HasValue &&
-                                            p.SpecialPriceStartDateTimeUtc.Value > nowUtc) ||
-                                           (p.SpecialPriceEndDateTimeUtc.HasValue &&
-                                            p.SpecialPriceEndDateTimeUtc.Value < nowUtc))) &&
-                                         (p.Price >= priceMin.Value)));
+                    query = query.Where(p => p.Price >= priceMin.Value);
                 }
                 if (priceMax.HasValue)
                 {
                     //max price
-                    query = query.Where(p =>
-                                        //special price (specified price and valid date range)
-                                        ((p.SpecialPrice.HasValue &&
-                                          ((!p.SpecialPriceStartDateTimeUtc.HasValue ||
-                                            p.SpecialPriceStartDateTimeUtc.Value < nowUtc) &&
-                                           (!p.SpecialPriceEndDateTimeUtc.HasValue ||
-                                            p.SpecialPriceEndDateTimeUtc.Value > nowUtc))) &&
-                                         (p.SpecialPrice <= priceMax.Value))
-                                        ||
-                                        //regular price (price isn't specified or date range isn't valid)
-                                        ((!p.SpecialPrice.HasValue ||
-                                          ((p.SpecialPriceStartDateTimeUtc.HasValue &&
-                                            p.SpecialPriceStartDateTimeUtc.Value > nowUtc) ||
-                                           (p.SpecialPriceEndDateTimeUtc.HasValue &&
-                                            p.SpecialPriceEndDateTimeUtc.Value < nowUtc))) &&
-                                         (p.Price <= priceMax.Value)));
+                    query = query.Where(p => p.Price <= priceMax.Value);
                 }
                 if (!showHidden)
                 {
@@ -1234,15 +1204,15 @@ namespace Nop.Services.Catalog
         }
 
         /// <summary>
-        /// Update HasTierPrices property (used for performance optimization)
+        /// Update HasAdvancedPricing property (used for performance optimization)
         /// </summary>
         /// <param name="product">Product</param>
-        public virtual void UpdateHasTierPricesProperty(Product product)
+        public virtual void UpdateHasAdvancedPricingProperty(Product product)
         {
             if (product == null)
                 throw new ArgumentNullException("product");
 
-            product.HasTierPrices = product.TierPrices.Any();
+            product.HasAdvancedPricing = product.AdvancedPrices.Any();
             UpdateProduct(product);
         }
 
@@ -1781,71 +1751,71 @@ namespace Nop.Services.Catalog
             return result;
         }
         #endregion
-        
-        #region Tier prices
-        
-        /// <summary>
-        /// Deletes a tier price
-        /// </summary>
-        /// <param name="tierPrice">Tier price</param>
-        public virtual void DeleteTierPrice(TierPrice tierPrice)
-        {
-            if (tierPrice == null)
-                throw new ArgumentNullException("tierPrice");
 
-            _tierPriceRepository.Delete(tierPrice);
-
-            _cacheManager.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-
-            //event notification
-            _eventPublisher.EntityDeleted(tierPrice);
-        }
+        #region Advanced pricing
 
         /// <summary>
-        /// Gets a tier price
+        /// Gets an advanced price
         /// </summary>
-        /// <param name="tierPriceId">Tier price identifier</param>
-        /// <returns>Tier price</returns>
-        public virtual TierPrice GetTierPriceById(int tierPriceId)
+        /// <param name="advancedPriceId">Advanced price identifier</param>
+        /// <returns>Advanced price</returns>
+        public virtual AdvancedPrice GetAdvancedPriceById(int advancedPriceId)
         {
-            if (tierPriceId == 0)
+            if (advancedPriceId == 0)
                 return null;
             
-            return _tierPriceRepository.GetById(tierPriceId);
+            return _advancedPriceRepository.GetById(advancedPriceId);
         }
 
         /// <summary>
-        /// Inserts a tier price
+        /// Inserts an advanced price
         /// </summary>
-        /// <param name="tierPrice">Tier price</param>
-        public virtual void InsertTierPrice(TierPrice tierPrice)
+        /// <param name="advancedPrice">Advanced price</param>
+        public virtual void InsertAdvancedPrice(AdvancedPrice advancedPrice)
         {
-            if (tierPrice == null)
-                throw new ArgumentNullException("tierPrice");
+            if (advancedPrice == null)
+                throw new ArgumentNullException("advancedPrice");
 
-            _tierPriceRepository.Insert(tierPrice);
+            _advancedPriceRepository.Insert(advancedPrice);
 
             _cacheManager.RemoveByPattern(PRODUCTS_PATTERN_KEY);
 
             //event notification
-            _eventPublisher.EntityInserted(tierPrice);
+            _eventPublisher.EntityInserted(advancedPrice);
         }
 
         /// <summary>
-        /// Updates the tier price
+        /// Updates an advanced price
         /// </summary>
-        /// <param name="tierPrice">Tier price</param>
-        public virtual void UpdateTierPrice(TierPrice tierPrice)
+        /// <param name="advancedPrice">Advanced price</param>
+        public virtual void UpdateAdvancedPrice(AdvancedPrice advancedPrice)
         {
-            if (tierPrice == null)
-                throw new ArgumentNullException("tierPrice");
+            if (advancedPrice == null)
+                throw new ArgumentNullException("advancedPrice");
 
-            _tierPriceRepository.Update(tierPrice);
+            _advancedPriceRepository.Update(advancedPrice);
 
             _cacheManager.RemoveByPattern(PRODUCTS_PATTERN_KEY);
 
             //event notification
-            _eventPublisher.EntityUpdated(tierPrice);
+            _eventPublisher.EntityUpdated(advancedPrice);
+        }
+
+        /// <summary>
+        /// Deletes an advanced price
+        /// </summary>
+        /// <param name="advancedPrice">Advanced price</param>
+        public virtual void DeleteAdvancedPrice(AdvancedPrice advancedPrice)
+        {
+            if (advancedPrice == null)
+                throw new ArgumentNullException("advancedPrice");
+
+            _advancedPriceRepository.Delete(advancedPrice);
+
+            _cacheManager.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+
+            //event notification
+            _eventPublisher.EntityDeleted(advancedPrice);
         }
 
         #endregion

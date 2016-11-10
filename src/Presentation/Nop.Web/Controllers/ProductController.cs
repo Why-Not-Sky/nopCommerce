@@ -838,29 +838,27 @@ namespace Nop.Web.Controllers
 
             #endregion
 
-            #region Tier prices
+            #region Advanced pricing
 
-            if (product.HasTierPrices && _permissionService.Authorize(StandardPermissionProvider.DisplayPrices))
+            if (product.HasAdvancedPricing && _permissionService.Authorize(StandardPermissionProvider.DisplayPrices))
             {
-                model.TierPrices = product.TierPrices
-                    .OrderBy(x => x.Quantity)
-                    .ToList()
+                model.AdvancedPrices = product.AdvancedPrices.OrderBy(x => x.Quantity).ToList()
                     .FilterByStore(_storeContext.CurrentStore.Id)
                     .FilterForCustomer(_workContext.CurrentCustomer)
-                    .RemoveDuplicatedQuantities()
-                    .Select(tierPrice =>
+                    .FilterByDate()
+                    .RemoveDuplicatedQuantities().Select(advancedPrice =>
                     {
-                        var m = new ProductDetailsModel.TierPriceModel
-                        {
-                            Quantity = tierPrice.Quantity,
-                        };
                         decimal taxRate;
-                        decimal priceBase = _taxService.GetProductPrice(product, _priceCalculationService.GetFinalPrice(product, _workContext.CurrentCustomer, decimal.Zero, _catalogSettings.DisplayTierPricesWithDiscounts, tierPrice.Quantity), out taxRate);
-                        decimal price = _currencyService.ConvertFromPrimaryStoreCurrency(priceBase, _workContext.WorkingCurrency);
-                        m.Price = _priceFormatter.FormatPrice(price, false, false);
-                        return m;
-                    })
-                    .ToList();
+                        var priceBase = _taxService.GetProductPrice(product, _priceCalculationService.GetFinalPrice(product,
+                            _workContext.CurrentCustomer, decimal.Zero, _catalogSettings.DisplayAdvancedPricesWithDiscounts, advancedPrice.Quantity), out taxRate);
+                        var price = _currencyService.ConvertFromPrimaryStoreCurrency(priceBase, _workContext.WorkingCurrency);
+
+                        return new ProductDetailsModel.AdvancedPriceModel
+                        {
+                            Quantity = advancedPrice.Quantity,
+                            Price = _priceFormatter.FormatPrice(price, false, false)
+                        };
+                    }).ToList();
             }
 
             #endregion

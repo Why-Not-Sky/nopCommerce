@@ -26,7 +26,7 @@ namespace Nop.Web.Models.Catalog
             ProductSpecifications= new List<ProductSpecificationModel>();
             ProductManufacturers = new List<ManufacturerModel>();
             ProductReviewOverview = new ProductReviewOverviewModel();
-            TierPrices = new List<TierPriceModel>();
+            AdvancedPrices = new List<AdvancedPriceModel>();
         }
 
         //picture(s)
@@ -98,7 +98,7 @@ namespace Nop.Web.Models.Catalog
 
         public ProductReviewOverviewModel ProductReviewOverview { get; set; }
 
-        public IList<TierPriceModel> TierPrices { get; set; }
+        public IList<AdvancedPriceModel> AdvancedPrices { get; set; }
 
         //a list of associated products. For example, "Grouped" products could have several child "simple" products
         public IList<ProductDetailsModel> AssociatedProducts { get; set; }
@@ -217,7 +217,7 @@ namespace Nop.Web.Models.Catalog
             public GiftCardType GiftCardType { get; set; }
         }
 
-        public partial class TierPriceModel : BaseNopModel
+        public partial class AdvancedPriceModel : BaseNopModel
         {
             public string Price { get; set; }
 

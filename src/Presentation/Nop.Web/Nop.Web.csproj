@@ -1065,7 +1065,7 @@
     <Content Include="Views\Product\_ProductBreadcrumb.cshtml" />
     <Content Include="Views\Product\ProductReviews.cshtml" />
     <Content Include="Views\Product\_ProductSpecifications.cshtml" />
-    <Content Include="Views\Product\_ProductTierPrices.cshtml" />
+    <Content Include="Views\Product\_ProductAdvancedPricing.cshtml" />
     <Content Include="Views\Product\_GiftCardInfo.cshtml" />
     <Content Include="Views\Product\_ProductPrice.cshtml" />
     <Content Include="Views\Product\_AddToCart.cshtml" />

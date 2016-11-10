@@ -254,10 +254,10 @@ namespace Nop.Services.Catalog
         IList<Product> GetProductsBySku(string[] skuArray);
 
         /// <summary>
-        /// Update HasTierPrices property (used for performance optimization)
+        /// Update HasAdvancedPricing property (used for performance optimization)
         /// </summary>
         /// <param name="product">Product</param>
-        void UpdateHasTierPricesProperty(Product product);
+        void UpdateHasAdvancedPricingProperty(Product product);
 
         /// <summary>
         /// Update HasDiscountsApplied property (used for performance optimization)
@@ -397,33 +397,33 @@ namespace Nop.Services.Catalog
         IList<Product> GetCrosssellProductsByShoppingCart(IList<ShoppingCartItem> cart, int numberOfProducts);
 
         #endregion
-        
-        #region Tier prices
+
+        #region Advanced pricing
 
         /// <summary>
-        /// Deletes a tier price
+        /// Gets an advanced price
         /// </summary>
-        /// <param name="tierPrice">Tier price</param>
-        void DeleteTierPrice(TierPrice tierPrice);
+        /// <param name="advancedPriceId">Advanced price identifier</param>
+        /// <returns>Advanced price</returns>
+        AdvancedPrice GetAdvancedPriceById(int advancedPriceId);
 
         /// <summary>
-        /// Gets a tier price
+        /// Inserts an advanced price
         /// </summary>
-        /// <param name="tierPriceId">Tier price identifier</param>
-        /// <returns>Tier price</returns>
-        TierPrice GetTierPriceById(int tierPriceId);
+        /// <param name="advancedPrice">Advanced price</param>
+        void InsertAdvancedPrice(AdvancedPrice advancedPrice);
 
         /// <summary>
-        /// Inserts a tier price
+        /// Updates an advanced price
         /// </summary>
-        /// <param name="tierPrice">Tier price</param>
-        void InsertTierPrice(TierPrice tierPrice);
+        /// <param name="advancedPrice">Advanced price</param>
+        void UpdateAdvancedPrice(AdvancedPrice advancedPrice);
 
         /// <summary>
-        /// Updates the tier price
+        /// Deletes an advanced price
         /// </summary>
-        /// <param name="tierPrice">Tier price</param>
-        void UpdateTierPrice(TierPrice tierPrice);
+        /// <param name="advancedPrice">Advanced price</param>
+        void DeleteAdvancedPrice(AdvancedPrice advancedPrice);
 
         #endregion
 

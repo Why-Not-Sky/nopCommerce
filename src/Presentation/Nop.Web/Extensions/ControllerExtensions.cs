@@ -158,7 +158,7 @@ namespace Nop.Web.Extensions
                                                 Product minPriceProduct = null;
                                                 foreach (var associatedProduct in associatedProducts)
                                                 {
-                                                    //calculate for the maximum quantity (in case if we have tier prices)
+                                                    //calculate for the maximum quantity (in case if we have advanced prices)
                                                     var tmpPrice = priceCalculationService.GetFinalPrice(associatedProduct,
                                                         workContext.CurrentCustomer, decimal.Zero, true, int.MaxValue);
                                                     if (!minPossiblePrice.HasValue || tmpPrice < minPossiblePrice.Value)
@@ -253,7 +253,7 @@ namespace Nop.Web.Extensions
                                         {
                                             //prices
 
-                                            //calculate for the maximum quantity (in case if we have tier prices)
+                                            //calculate for the maximum quantity (in case if we have advanced prices)
                                             decimal minPossiblePrice = priceCalculationService.GetFinalPrice(product,
                                                 workContext.CurrentCustomer, decimal.Zero, true, int.MaxValue);
 
@@ -264,21 +264,20 @@ namespace Nop.Web.Extensions
                                             decimal oldPrice = currencyService.ConvertFromPrimaryStoreCurrency(oldPriceBase, workContext.WorkingCurrency);
                                             decimal finalPrice = currencyService.ConvertFromPrimaryStoreCurrency(finalPriceBase, workContext.WorkingCurrency);
 
-                                            //do we have tier prices configured?
-                                            var tierPrices = new List<TierPrice>();
-                                            if (product.HasTierPrices)
+                                            //do we have advanced prices configured?
+                                            var advancedPrices = new List<AdvancedPrice>();
+                                            if (product.HasAdvancedPricing)
                                             {
-                                                tierPrices.AddRange(product.TierPrices
+                                                advancedPrices.AddRange(product.AdvancedPrices
                                                     .OrderBy(tp => tp.Quantity)
                                                     .ToList()
                                                     .FilterByStore(storeContext.CurrentStore.Id)
                                                     .FilterForCustomer(workContext.CurrentCustomer)
+                                                    .FilterByDate()
                                                     .RemoveDuplicatedQuantities());
                                             }
-                                            //When there is just one tier (with  qty 1), 
-                                            //there are no actual savings in the list.
-                                            bool displayFromMessage = tierPrices.Any() &&
-                                                !(tierPrices.Count == 1 && tierPrices[0].Quantity <= 1);
+                                            //When there is just one advanced price (with  qty 1), there are no actual savings in the list.
+                                            var displayFromMessage = advancedPrices.Any() && !(advancedPrices.Count == 1 && advancedPrices[0].Quantity <= 1);
                                             if (displayFromMessage)
                                             {
                                                 priceModel.OldPrice = null;

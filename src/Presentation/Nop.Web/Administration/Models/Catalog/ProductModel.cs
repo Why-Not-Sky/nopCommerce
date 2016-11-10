@@ -311,18 +311,6 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.ProductCost")]
         public decimal ProductCost { get; set; }
 
-        [NopResourceDisplayName("Admin.Catalog.Products.Fields.SpecialPrice")]
-        [UIHint("DecimalNullable")]
-        public decimal? SpecialPrice { get; set; }
-
-        [NopResourceDisplayName("Admin.Catalog.Products.Fields.SpecialPriceStartDateTimeUtc")]
-        [UIHint("DateTimeNullable")]
-        public DateTime? SpecialPriceStartDateTimeUtc { get; set; }
-
-        [NopResourceDisplayName("Admin.Catalog.Products.Fields.SpecialPriceEndDateTimeUtc")]
-        [UIHint("DateTimeNullable")]
-        public DateTime? SpecialPriceEndDateTimeUtc { get; set; }
-
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.CustomerEntersPrice")]
         public bool CustomerEntersPrice { get; set; }
 
@@ -689,24 +677,30 @@ namespace Nop.Admin.Models.Catalog
             public bool IsLoggedInAsVendor { get; set; }
         }
 
-        public partial class TierPriceModel : BaseNopEntityModel
+        public partial class AdvancedPriceModel : BaseNopEntityModel
         {
             public int ProductId { get; set; }
 
             public int CustomerRoleId { get; set; }
-            [NopResourceDisplayName("Admin.Catalog.Products.TierPrices.Fields.CustomerRole")]
+            [NopResourceDisplayName("Admin.Catalog.Products.AdvancedPricing.Fields.CustomerRole")]
             public string CustomerRole { get; set; }
 
 
             public int StoreId { get; set; }
-            [NopResourceDisplayName("Admin.Catalog.Products.TierPrices.Fields.Store")]
+            [NopResourceDisplayName("Admin.Catalog.Products.AdvancedPricing.Fields.Store")]
             public string Store { get; set; }
 
-            [NopResourceDisplayName("Admin.Catalog.Products.TierPrices.Fields.Quantity")]
+            [NopResourceDisplayName("Admin.Catalog.Products.AdvancedPricing.Fields.Quantity")]
             public int Quantity { get; set; }
 
-            [NopResourceDisplayName("Admin.Catalog.Products.TierPrices.Fields.Price")]
+            [NopResourceDisplayName("Admin.Catalog.Products.AdvancedPricing.Fields.Price")]
             public decimal Price { get; set; }
+
+            [NopResourceDisplayName("Admin.Catalog.Products.AdvancedPricing.Fields.StartDateTimeUtc")]
+            public DateTime? StartDateTimeUtc { get; set; }
+
+            [NopResourceDisplayName("Admin.Catalog.Products.AdvancedPricing.Fields.EndDateTimeUtc")]
+            public DateTime? EndDateTimeUtc { get; set; }
         }
 
         public partial class ProductWarehouseInventoryModel : BaseNopModel

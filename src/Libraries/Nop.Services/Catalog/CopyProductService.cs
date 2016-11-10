@@ -204,9 +204,6 @@ namespace Nop.Services.Catalog
                 Price = product.Price,
                 OldPrice = product.OldPrice,
                 ProductCost = product.ProductCost,
-                SpecialPrice = product.SpecialPrice,
-                SpecialPriceStartDateTimeUtc = product.SpecialPriceStartDateTimeUtc,
-                SpecialPriceEndDateTimeUtc = product.SpecialPriceEndDateTimeUtc,
                 CustomerEntersPrice = product.CustomerEntersPrice,
                 MinimumCustomerEnteredPrice = product.MinimumCustomerEnteredPrice,
                 MaximumCustomerEnteredPrice = product.MaximumCustomerEnteredPrice,
@@ -527,17 +524,19 @@ namespace Nop.Services.Catalog
                 _productAttributeService.InsertProductAttributeCombination(combinationCopy);
             }
 
-            //tier prices
-            foreach (var tierPrice in product.TierPrices)
+            //advanced prices
+            foreach (var advancedPrice in product.AdvancedPrices)
             {
-                _productService.InsertTierPrice(
-                    new TierPrice
+                _productService.InsertAdvancedPrice(
+                    new AdvancedPrice
                     {
                         ProductId = productCopy.Id,
-                        StoreId = tierPrice.StoreId,
-                        CustomerRoleId = tierPrice.CustomerRoleId,
-                        Quantity = tierPrice.Quantity,
-                        Price = tierPrice.Price
+                        StoreId = advancedPrice.StoreId,
+                        CustomerRoleId = advancedPrice.CustomerRoleId,
+                        Quantity = advancedPrice.Quantity,
+                        Price = advancedPrice.Price,
+                        StartDateTimeUtc = advancedPrice.StartDateTimeUtc,
+                        EndDateTimeUtc = advancedPrice.EndDateTimeUtc
                     });
             }
 
@@ -549,8 +548,8 @@ namespace Nop.Services.Catalog
             }
 
 
-            //update "HasTierPrices" and "HasDiscountsApplied" properties
-            _productService.UpdateHasTierPricesProperty(productCopy);
+            //update "HasAdvancedPricing" and "HasDiscountsApplied" properties
+            _productService.UpdateHasAdvancedPricingProperty(productCopy);
             _productService.UpdateHasDiscountsApplied(productCopy);
 
 

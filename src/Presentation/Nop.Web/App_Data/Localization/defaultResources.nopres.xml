@@ -2400,6 +2400,39 @@
   <LocaleResource Name="Admin.Catalog.Products.AddNew">
     <Value>Add a new product</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing">
+    <Value>Advanced зricing</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.CustomerRole">
+    <Value>Customer role</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.CustomerRole.All">
+    <Value>All customer roles</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.EndDateTimeUtc">
+    <Value>End date</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.Price">
+    <Value>Price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.Quantity">
+    <Value>Quantity</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.StartDateTimeUtc">
+    <Value>Start date</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.Store">
+    <Value>Store</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Fields.Store.All">
+    <Value>All stores</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.SaveBeforeEdit">
+    <Value>You need to save the product before you can add advanced pricing for this product page.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.AdvancedPricing.Hint">
+    <Value>Advanced pricing is a promotional tool that allows a store owner to price items differently for higher quantities.</Value>
+  </LocaleResource>
   <LocaleResource Name="Admin.Catalog.Products.AssociatedProducts">
     <Value>Associated products (variants)</Value>
   </LocaleResource>
@@ -3060,24 +3093,6 @@
   <LocaleResource Name="Admin.Catalog.Products.Fields.Sku.Hint">
     <Value>Product stock keeping unit (SKU). Your internal unique identifier that can be used to track this product.</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPrice">
-    <Value>Special price</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPrice.Hint">
-    <Value>Set a special price of the product. The new price will be valid between the start and end dates.</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPriceEndDateTimeUtc">
-    <Value>Special price end date</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPriceEndDateTimeUtc.Hint">
-    <Value>The end date of the special price in Coordinated Universal Time (UTC).</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPriceStartDateTimeUtc">
-    <Value>Special price start date</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.Fields.SpecialPriceStartDateTimeUtc.Hint">
-    <Value>The start date of the special price in Coordinated Universal Time (UTC).</Value>
-  </LocaleResource>
   <LocaleResource Name="Admin.Catalog.Products.Fields.StockQuantity">
     <Value>Stock quantity</Value>
   </LocaleResource>
@@ -3674,33 +3689,6 @@
   </LocaleResource>
   <LocaleResource Name="Admin.Catalog.Products.SpecificationAttributes.Hint">
     <Value>Specification attributes are product features i.e, screen size, number of USB-ports, visible on product details page. Specification attributes can be used for filtering products on the category details page.  Unlike product attributes, specification attributes are used for information purposes only.</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.TierPrices">
-    <Value>Tier prices</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.CustomerRole">
-    <Value>Customer role</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.CustomerRole.All">
-    <Value>All customer roles</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.Price">
-    <Value>Price</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.Quantity">
-    <Value>Quantity</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.Store">
-    <Value>Store</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Fields.Store.All">
-    <Value>All stores</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.TierPrices.SaveBeforeEdit">
-    <Value>You need to save the product before you can add tier prices for this product page.</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.TierPrices.Hint">
-    <Value>Tier pricing is a promotional tool that allows a store owner to price items differently for higher quantities.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Catalog.Products.Updated">
     <Value>The product has been updated successfully.</Value>
@@ -6603,6 +6591,9 @@
   <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.AdminComment">
     <Value>Admin comment</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.AdvancedPricing">
+    <Value>Advanced pricing</Value>
+  </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.AllowBackInStockSubscriptions">
     <Value>Allow back in stock subscriptions</Value>
   </LocaleResource>
@@ -6804,15 +6795,6 @@
   <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.ShowOnHomePage">
     <Value>Show on home page</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.SpecialPrice">
-    <Value>Special price</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.SpecialPriceEndDate">
-    <Value>Special price end date</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.SpecialPriceStartDate">
-    <Value>Special price start date</Value>
-  </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.SpecificationAttributes">
     <Value>Specification attributes</Value>
   </LocaleResource>
@@ -6821,9 +6803,6 @@
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.TelecommunicationsBroadcastingElectronicServices">
     <Value>Telecommunications, broadcasting and electronic services</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.TierPrices">
-    <Value>Tier prices</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.Vendor">
     <Value>Vendor</Value>
@@ -14670,6 +14649,15 @@
   <LocaleResource Name="ProductAttributes.Quantity">
     <Value> - quantity {0}</Value>
   </LocaleResource>
+  <LocaleResource Name="Products.AdvancedPricing">
+    <Value>PRICE BREAKS - The more you buy, the more you save</Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.AdvancedPricing.Price">
+    <Value>Price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.AdvancedPricing.Quantity">
+    <Value>Quantity</Value>
+  </LocaleResource>
   <LocaleResource Name="Products.AlsoPurchased">
     <Value>Customers who bought this item also bought</Value>
   </LocaleResource>
@@ -14942,15 +14930,6 @@
   </LocaleResource>
   <LocaleResource Name="Products.Tags.ProductsTaggedWith">
     <Value>Products tagged with '{0}'</Value>
-  </LocaleResource>
-  <LocaleResource Name="Products.TierPrices">
-    <Value>PRICE BREAKS - The more you buy, the more you save</Value>
-  </LocaleResource>
-  <LocaleResource Name="Products.TierPrices.Price">
-    <Value>Price</Value>
-  </LocaleResource>
-  <LocaleResource Name="Products.TierPrices.Quantity">
-    <Value>Quantity</Value>
   </LocaleResource>
   <LocaleResource Name="Products.Vendor">
     <Value>Vendor</Value>

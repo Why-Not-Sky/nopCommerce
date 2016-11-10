@@ -194,7 +194,7 @@
     <Compile Include="Catalog\ProductTagService.cs" />
     <Compile Include="Catalog\IRecentlyViewedProductsService.cs" />
     <Compile Include="Catalog\RecentlyViewedProductsService.cs" />
-    <Compile Include="Catalog\TierPriceExtensions.cs" />
+    <Compile Include="Catalog\AdvancedPriceExtensions.cs" />
     <Compile Include="Catalog\ProductExtensions.cs" />
     <Compile Include="Catalog\PriceFormatter.cs" />
     <Compile Include="Catalog\IPriceCalculationService.cs" />

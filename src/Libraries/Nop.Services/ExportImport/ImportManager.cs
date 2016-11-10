@@ -834,15 +834,6 @@ namespace Nop.Services.ExportImport
                             case "ProductCost":
                                 product.ProductCost = property.DecimalValue;
                                 break;
-                            case "SpecialPrice":
-                                product.SpecialPrice = property.DecimalValueNullable;
-                                break;
-                            case "SpecialPriceStartDateTimeUtc":
-                                product.SpecialPriceStartDateTimeUtc = property.DateTimeNullable;
-                                break;
-                            case "SpecialPriceEndDateTimeUtc":
-                                product.SpecialPriceEndDateTimeUtc = property.DateTimeNullable;
-                                break;
                             case "CustomerEntersPrice":
                                 product.CustomerEntersPrice = property.BooleanValue;
                                 break;
@@ -1007,11 +998,11 @@ namespace Nop.Services.ExportImport
 
                     lastLoadedProduct = product;
 
-                    //update "HasTierPrices" and "HasDiscountsApplied" properties
-                    //_productService.UpdateHasTierPricesProperty(product);
+                    //update "HasAdvancedPricing" and "HasDiscountsApplied" properties
+                    //_productService.UpdateHasAdvancedPricingProperty(product);
                     //_productService.UpdateHasDiscountsApplied(product);
                 }
-               
+
                 if (_mediaSettings.ImportProductImagesUsingHash && _pictureService.StoreInDb && _dataProvider.SupportedLengthOfBinaryHash() > 0)
                     ImportProductImagesUsingHash(productPictureMetadata, allProductsBySku);
                 else
